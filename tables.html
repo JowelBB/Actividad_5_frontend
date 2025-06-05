@@ -255,8 +255,8 @@
             }
     
             // Cargar tablas iniciales
-            cargarTabla('http://localhost:8000/productos/', 'productos-table-container', productosColumnOrder);
-            cargarTabla('http://localhost:8000/categorias/', 'categorias-table-container', categoriasColumnOrder);
+            cargarTabla('https://actividad-5-backend.onrender.com/productos/', 'productos-table-container', productosColumnOrder);
+            cargarTabla('https://actividad-5-backend.onrender.com/categorias/', 'categorias-table-container', categoriasColumnOrder);
     
             // Funcionalidad para Productos
             $('#enviar-producto').on('click', function() {
@@ -264,7 +264,7 @@
                 const id = $('#producto-id-input').val();
     
                 if (action === 'filtrar' && id) {
-                    cargarTabla(`http://localhost:8000/productos/${id}`, 'productos-table-container', productosColumnOrder);
+                    cargarTabla(`https://actividad-5-backend.onrender.com/productos/${id}`, 'productos-table-container', productosColumnOrder);
                 } else if (action === 'crear') {
                     $('#modal-producto').css('display', 'block');
                     $('#producto-form')[0].reset(); // Limpiar el formulario
@@ -305,7 +305,7 @@
                 const id = $('#categoria-id-input').val();
     
                 if (action === 'filtrar' && id) {
-                    cargarTabla(`http://localhost:8000/categorias/${id}`, 'categorias-table-container', categoriasColumnOrder);
+                    cargarTabla(`https://actividad-5-backend.onrender.com/categorias/${id}`, 'categorias-table-container', categoriasColumnOrder);
                 } else if (action === 'crear') {
                     $('#modal-categoria').css('display', 'block');
                     $('#categoria-form')[0].reset();
@@ -340,13 +340,13 @@
             // Funciones CRUD
             function crearProducto(data) {
                 $.ajax({
-                    url: 'http://localhost:8000/productos/',
+                    url: 'https://actividad-5-backend.onrender.com/productos/',
                     method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     success: function(response) {
                         alert('Producto creado exitosamente');
-                        cargarTabla('http://localhost:8000/productos/', 'productos-table-container', productosColumnOrder);
+                        cargarTabla('https://actividad-5-backend.onrender.com/productos/', 'productos-table-container', productosColumnOrder);
                     },
                     error: function(error) {
                         console.error('Error al crear producto:', error);
@@ -357,7 +357,7 @@
     
             function cargarDatosProducto(id) {
                 $.ajax({
-                    url: `http://localhost:8000/productos/${id}`,
+                    url: `https://actividad-5-backend.onrender.com/productos/${id}`,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -378,14 +378,14 @@
     
             function actualizarProducto(id, data) {
                 $.ajax({
-                    url: `http://localhost:8000/productos/${id}`,
+                    url: `https://actividad-5-backend.onrender.com/productos/${id}`,
                     method: 'PUT',
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     success: function(response) {
                         console.log("Respuesta de actualizarProducto", response)
                         alert('Producto actualizado exitosamente');
-                        cargarTabla('http://localhost:8000/productos/', 'productos-table-container', productosColumnOrder);
+                        cargarTabla('https://actividad-5-backend.onrender.com/productos/', 'productos-table-container', productosColumnOrder);
                     },
                     error: function(error) {
                         console.error('Error al actualizar producto:', error);
@@ -396,11 +396,11 @@
     
             function eliminarProducto(id) {
                 $.ajax({
-                    url: `http://localhost:8000/productos/${id}`,
+                    url: `https://actividad-5-backend.onrender.com/productos/${id}`,
                     method: 'DELETE',
                     success: function(response) {
                         alert('Producto eliminado exitosamente');
-                        cargarTabla('http://localhost:8000/productos/', 'productos-table-container', productosColumnOrder);
+                        cargarTabla('https://actividad-5-backend.onrender.com/productos/', 'productos-table-container', productosColumnOrder);
                     },
                     error: function(error) {
                         console.error('Error al eliminar producto:', error);
@@ -411,13 +411,13 @@
     
             function crearCategoria(data) {
                 $.ajax({
-                    url: 'http://localhost:8000/categorias/',
+                    url: 'https://actividad-5-backend.onrender.com/categorias/',
                     method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     success: function(response) {
                         alert('Categoría creada exitosamente');
-                        cargarTabla('http://localhost:8000/categorias/', 'categorias-table-container', categoriasColumnOrder);
+                        cargarTabla('https://actividad-5-backend.onrender.com/categorias/', 'categorias-table-container', categoriasColumnOrder);
                     },
                     error: function(error) {
                         console.error('Error al crear categoría:', error);
@@ -428,7 +428,7 @@
     
             function cargarDatosCategoria(id) {
                 $.ajax({
-                    url: `http://localhost:8000/categorias/${id}`,
+                    url: `https://actividad-5-backend.onrender.com/categorias/${id}`,
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -448,14 +448,14 @@
     
             function actualizarCategoria(id, data) {
                 $.ajax({
-                    url: `http://localhost:8000/categorias/${id}`,
+                    url: `https://actividad-5-backend.onrender.com/categorias/${id}`,
                     method: 'PUT',
                     contentType: 'application/json',
                     data: JSON.stringify(data),
                     success: function(response) {
                         console.log("Respuesta de actualizarCategoria:", response);
                         alert('Categoría actualizada exitosamente');
-                        cargarTabla('http://localhost:8000/categorias/', 'categorias-table-container', categoriasColumnOrder);
+                        cargarTabla('https://actividad-5-backend.onrender.com/categorias/', 'categorias-table-container', categoriasColumnOrder);
                     },
                     error: function(error) {
                         console.error('Error al actualizar categoría:', error);
@@ -466,12 +466,12 @@
     
             function eliminarCategoria(id) {
                 $.ajax({
-                    url: `http://localhost:8000/categorias/${id}`,
+                    url: `https://actividad-5-backend.onrender.com/categorias/${id}`,
                     method: 'DELETE',
                     success: function(response) {
                         console.log("Respuesta de eliminarCategoria:", response);
                         alert('Categoría eliminada exitosamente');
-                        cargarTabla('http://localhost:8000/categorias/', 'categorias-table-container', categoriasColumnOrder);
+                        cargarTabla('https://actividad-5-backend.onrender.com/categorias/', 'categorias-table-container', categoriasColumnOrder);
                     },
                     error: function(error) {
                         console.error('Error al eliminar categoría:', error);
