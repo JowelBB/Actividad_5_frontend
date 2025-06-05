@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Mi Dashboard CRUD</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-container h2 {
+            margin-bottom: 30px;
+            color: #343a40;
+            text-align: center;
+        }
+        .form-group label {
+            font-weight: 500;
+            color: #495057;
+        }
+        .btn-custom-dark {
+            background-color: #343a40;
+            border-color: #343a40;
+            padding: 10px 0;
+            font-size: 1.1rem;
+            width: 100%;
+            color: white;
+        }
+        .btn-custom-dark:hover {
+            background-color: #495057;
+            border-color: #495057;
+            color: white;
+        }
+        .text-center a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            display: none; /* Oculto por defecto */
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm" action="#" method="POST">
+            <div class="form-group">
+                <label for="username">Usuario</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Ingresa tu usuario" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Ingresa tu contraseña" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn btn-custom-dark mt-4">Entrar</button>
+        </form>
+        <div id="responseMessage" class="message"></div>
+        <p class="text-center mt-3">
+            <a href="signup.html">¿No tienes cuenta? Regístrate aquí</a>
+        </p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Evitar el envío por defecto del formulario
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const responseMessageDiv = document.getElementById('responseMessage');
+
+            responseMessageDiv.style.display = 'none'; // Ocultar mensajes previos
+            responseMessageDiv.className = 'message'; // Resetear clases
+
+            // URL del endpoint de tu API para obtener el token
+            const API_TOKEN_URL = 'http://localhost:8000/token';
+
+            // FastAPI espera el formulario de login en formato x-www-form-urlencoded
+            const formData = new URLSearchParams();
+            formData.append('username', username);
+            formData.append('password', password);
+
+            try {
+                const response = await fetch(API_TOKEN_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded', // ¡Importante para OAuth2PasswordRequestForm!
+                    },
+                    body: formData,
+                });
+
+                const data = await response.json(); // Parsea la respuesta JSON
+
+                if (response.ok) { // Si la respuesta HTTP es 2xx (éxito)
+                    // Almacena el token en localStorage
+                    localStorage.setItem('access_token', data.access_token);
+                    localStorage.setItem('token_type', data.token_type);
+
+                    responseMessageDiv.textContent = '¡Inicio de sesión exitoso! Redireccionando...';
+                    responseMessageDiv.classList.add('success-message');
+                    responseMessageDiv.style.display = 'block';
+
+                    console.log('Token recibido y almacenado:', data.access_token);
+
+                    // Redireccionar al usuario a la página principal del dashboard
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500); // Redirecciona después de 1.5 segundos
+                } else {
+                    // Muestra el mensaje de error de la API
+                    responseMessageDiv.textContent = `Error al iniciar sesión: ${data.detail || 'Credenciales incorrectas.'}`;
+                    responseMessageDiv.classList.add('error-message');
+                    responseMessageDiv.style.display = 'block';
+                    console.error('Error en el inicio de sesión:', data);
+                }
+            } catch (error) {
+                responseMessageDiv.textContent = 'No se pudo conectar con el servidor. Inténtalo de nuevo más tarde.';
+                responseMessageDiv.classList.add('error-message');
+                responseMessageDiv.style.display = 'block';
+                console.error('Error de red o de la solicitud:', error);
+            }
+        });
+    </script>
+</body>
+</html>
