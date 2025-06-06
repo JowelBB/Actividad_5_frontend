@@ -217,6 +217,20 @@
             console.log('Sesión cerrada. Tokens eliminados.');
             window.location.href = 'signin.html'; // Redirigir a la página de inicio de sesión
         }
+        // Función para verificar si el usuario está logueado (solo redirige si no hay token)
+        function checkLoginStatus() {
+            const accessToken = localStorage.getItem('access_token');
+            if (!accessToken) {
+                // Si no hay token, redirigir al login
+                console.warn('No hay token de acceso. Redirigiendo a login.');
+                window.location.href = 'signin.html';
+            }
+        }
+        // Event listeners para los botones de cerrar sesión
+        document.getElementById('logoutButtonDesktop').addEventListener('click', logout);
+        
+        // Ejecutar la verificación de login al cargar la página
+        document.addEventListener('DOMContentLoaded', checkLoginStatus);
         
         $(document).ready(function() {
             const productosColumnOrder = ['id', 'nombre', 'descripcion', 'precio', 'categoria_id'];
