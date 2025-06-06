@@ -28,6 +28,14 @@
         .content {
             padding: 20px;
         }
+        .sidebar-sticky {
+            flex-grow: 1; /* Allow content to grow and push logout to bottom */
+        }
+        .sidebar-footer {
+            margin-top: 160%;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Separator */
+        }
         .table-controls {
             display: flex;
             align-items: center;
@@ -125,16 +133,19 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="#">
-                                Tablas
+                                Productos
                             </a>
                         </li>
                         </ul>
+                </div>
+                <div class="sidebar-footer">
+                    <button class="btn btn-outline-light btn-block" id="logoutButtonDesktop">Cerrar Sesión</button>
                 </div>
             </nav>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Tablas</h1>
+                    <h1 class="h2">Productos</h1>
                 </div>
 
                 <div id="productos-controls" class="table-controls">
@@ -198,7 +209,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
+    <script>    
+        // Función para cerrar sesión
+        function logout() {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('token_type');
+            console.log('Sesión cerrada. Tokens eliminados.');
+            window.location.href = 'signin.html'; // Redirigir a la página de inicio de sesión
+        }
+        
         $(document).ready(function() {
             const productosColumnOrder = ['id', 'nombre', 'descripcion', 'precio', 'categoria_id'];
             const categoriasColumnOrder = ['id', 'nombre'];
